@@ -1,4 +1,4 @@
-*** Creacion de mi carpeta del Proyecto ***
+*** Creacion de mi Carpeta del Proyecto ***
 
 Sigue los siguentes pasos para crear el proyecto final, no importando en que
 computadora se encuentre.
