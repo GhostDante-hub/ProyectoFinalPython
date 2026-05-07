@@ -1,0 +1,5 @@
+1|Carolina|0.001|Humano
+2|Chocolate De Dante|3|Chocolate Barato
+3|Donas Chocolatadas|30|Donas
+4|Zapatos|450|Ropa
+5|Victoria|1000000|Alien
