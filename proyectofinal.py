@@ -476,7 +476,7 @@ def abrir_registro_ventas():
         )
 
         # --- MOSTRAR TICKET ---
-        mostrar_ticket(prod, precio, cant, total)
+        mostrar_ticket(prod, precio, cantidad, total)
 
         # limpiar campos
 
