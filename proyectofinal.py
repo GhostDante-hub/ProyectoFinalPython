@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from PIL import Image, ImageTk
+from datetime import datetime
 import os
 
 # -------------------------
@@ -148,6 +149,36 @@ def abrir_registro_productos():
     )
 
     btn_guardar.pack(pady=30)
+
+def mostrar_ticket(producto, precio, cantidad, total):
+  ticket = tk.Toplevel()
+  ticket.title("Ticket de Venta")
+  ticket.geometry("300x350")
+  ticket.resizable(False, False)
+
+  # Fecha y hora
+  fecha_hora = datetime.now().strftime("%d/%m/%Y %I:%M:%S %p")
+
+  # Texto del ticket
+  texto = (
+  " *** PUNTO DE VENTA ***\n"
+  "--------------------------------------\n"
+  f"Fecha: {fecha_hora}\n"
+  "--------------------------------------\n"
+  f"Producto: {producto}\n"
+  f"Precio: ${precio}\n"
+  f"Cantidad: {cantidad}\n"
+  "--------------------------------------\n"
+  f"TOTAL: ${total}\n"
+  "--------------------------------------\n"
+  " ¡GRACIAS POR SU COMPRA!\n"
+  )
+
+  lbl_ticket = tk.Label(ticket, text=texto, justify="left", font=("Consolas", 11))
+  lbl_ticket.pack(pady=15)
+
+  btn_cerrar = ttk.Button(ticket, text="Cerrar", command=ticket.destroy)
+  btn_cerrar.pack(pady=10)
 
 def abrir_registro_ventas():
     ven = tk.Toplevel()
@@ -443,6 +474,9 @@ def abrir_registro_ventas():
             "Venta registrada",
             "La venta fue registrada correctamente"
         )
+
+        # --- MOSTRAR TICKET ---
+        mostrar_ticket(prod, precio, cant, total)
 
         # limpiar campos
 
