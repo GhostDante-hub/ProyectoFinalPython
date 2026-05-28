@@ -151,34 +151,172 @@ def abrir_registro_productos():
     btn_guardar.pack(pady=30)
 
 def mostrar_ticket(producto, precio, cantidad, total):
-  ticket = tk.Toplevel()
-  ticket.title("Ticket de Venta")
-  ticket.geometry("300x350")
-  ticket.resizable(False, False)
 
-  # Fecha y hora
-  fecha_hora = datetime.now().strftime("%d/%m/%Y %I:%M:%S %p")
+    ticket = tk.Toplevel()
+    ticket.title("Ticket de Venta")
+    ticket.geometry("380x450")
+    ticket.resizable(False, False)
+    ticket.configure(bg="#722FA1")
 
-  # Texto del ticket
-  texto = (
-  " *** PUNTO DE VENTA ***\n"
-  "--------------------------------------\n"
-  f"Fecha: {fecha_hora}\n"
-  "--------------------------------------\n"
-  f"Producto: {producto}\n"
-  f"Precio: ${precio}\n"
-  f"Cantidad: {cantidad}\n"
-  "--------------------------------------\n"
-  f"TOTAL: ${total}\n"
-  "--------------------------------------\n"
-  " ¡GRACIAS POR SU COMPRA!\n"
-  )
+    # -------------------------
+    # FECHA Y HORA
+    # -------------------------
+    fecha_hora = datetime.now().strftime("%d/%m/%Y %I:%M:%S %p")
 
-  lbl_ticket = tk.Label(ticket, text=texto, justify="left", font=("Consolas", 11))
-  lbl_ticket.pack(pady=15)
+    # -------------------------
+    # TÍTULO
+    # -------------------------
+    titulo = tk.Label(
+        ticket,
+        text="TICKET DE VENTA",
+        font=("Times New Roman", 22, "bold"),
+        bg="#722FA1",
+        fg="white"
+    )
+    titulo.pack(pady=15)
 
-  btn_cerrar = ttk.Button(ticket, text="Cerrar", command=ticket.destroy)
-  btn_cerrar.pack(pady=10)
+    # -------------------------
+    # FRAME PRINCIPAL
+    # -------------------------
+    frame_ticket = tk.Frame(
+        ticket,
+        bg="#AD70D8",
+        bd=0
+    )
+
+    frame_ticket.pack(
+        padx=25,
+        pady=10,
+        fill="both",
+        expand=True
+    )
+
+    # -------------------------
+    # LOGO / NOMBRE
+    # -------------------------
+    lbl_empresa = tk.Label(
+        frame_ticket,
+        text="DJ SOFTWARE STORE",
+        font=("Times New Roman", 18, "bold"),
+        bg="#AD70D8",
+        fg="white"
+    )
+
+    lbl_empresa.pack(pady=(20,5))
+
+    linea1 = tk.Frame(
+        frame_ticket,
+        bg="white",
+        height=2
+    )
+
+    linea1.pack(fill="x", padx=20, pady=10)
+
+    # -------------------------
+    # FECHA
+    # -------------------------
+    lbl_fecha = tk.Label(
+        frame_ticket,
+        text=f"Fecha: {fecha_hora}",
+        font=("Arial", 11),
+        bg="#AD70D8",
+        fg="white"
+    )
+
+    lbl_fecha.pack(anchor="w", padx=25, pady=5)
+
+    # -------------------------
+    # PRODUCTO
+    # -------------------------
+    lbl_producto = tk.Label(
+        frame_ticket,
+        text=f"Producto: {producto}",
+        font=("Arial", 12, "bold"),
+        bg="#AD70D8",
+        fg="white"
+    )
+
+    lbl_producto.pack(anchor="w", padx=25, pady=5)
+
+    # -------------------------
+    # PRECIO
+    # -------------------------
+    lbl_precio = tk.Label(
+        frame_ticket,
+        text=f"Precio: ${precio}",
+        font=("Arial", 12),
+        bg="#AD70D8",
+        fg="white"
+    )
+
+    lbl_precio.pack(anchor="w", padx=25, pady=5)
+
+    # -------------------------
+    # CANTIDAD
+    # -------------------------
+    lbl_cantidad = tk.Label(
+        frame_ticket,
+        text=f"Cantidad: {cantidad}",
+        font=("Arial", 12),
+        bg="#AD70D8",
+        fg="white"
+    )
+
+    lbl_cantidad.pack(anchor="w", padx=25, pady=5)
+
+    linea2 = tk.Frame(
+        frame_ticket,
+        bg="white",
+        height=2
+    )
+
+    linea2.pack(fill="x", padx=20, pady=15)
+
+    # -------------------------
+    # TOTAL
+    # -------------------------
+    lbl_total = tk.Label(
+        frame_ticket,
+        text=f"TOTAL: ${total}",
+        font=("Times New Roman", 18, "bold"),
+        bg="#AD70D8",
+        fg="#FFF176"
+    )
+
+    lbl_total.pack(pady=10)
+
+    # -------------------------
+    # MENSAJE
+    # -------------------------
+    lbl_gracias = tk.Label(
+        frame_ticket,
+        text="¡GRACIAS POR SU COMPRA!",
+        font=("Times New Roman", 14, "bold"),
+        bg="#AD70D8",
+        fg="white"
+    )
+
+    lbl_gracias.pack(pady=(10,20))
+
+    # -------------------------
+    # BOTÓN CERRAR
+    # -------------------------
+    btn_cerrar = tk.Button(
+        ticket,
+        text="Cerrar",
+        command=ticket.destroy,
+        font=("Times New Roman", 12, "bold"),
+        bg="#5289FF",
+        fg="white",
+        activebackground="#274E80",
+        activeforeground="white",
+        width=18,
+        bd=0,
+        pady=6,
+        cursor="hand2"
+    )
+
+    btn_cerrar.pack(pady=15)
 
 def abrir_registro_ventas():
     ven = tk.Toplevel()
