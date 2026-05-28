@@ -668,7 +668,256 @@ def abrir_registro_ventas():
     )
 
 def abrir_reportes():
-   messagebox.showinfo("Reportes", "Aquí irá el módulo de reportes.")
+
+    ventana = tk.Toplevel()
+    ventana.title("Reporte de Ventas")
+    ventana.geometry("750x550")
+    ventana.resizable(False, False)
+    ventana.configure(bg="#722FA1")
+
+    # -------------------------
+    # TÍTULO
+    # -------------------------
+    titulo = tk.Label(
+        ventana,
+        text="REPORTE DE VENTAS",
+        font=("Times New Roman", 22, "bold"),
+        bg="#722FA1",
+        fg="white"
+    )
+
+    titulo.pack(pady=20)
+
+    # -------------------------
+    # FRAME PRINCIPAL
+    # -------------------------
+    frame = tk.Frame(
+        ventana,
+        bg="#AD70D8"
+    )
+
+    frame.pack(
+        padx=20,
+        pady=10,
+        fill="both",
+        expand=True
+    )
+
+    # -------------------------
+    # ESTILO TREEVIEW
+    # -------------------------
+    estilo = ttk.Style()
+
+    estilo.theme_use("default")
+
+    estilo.configure(
+        "Treeview",
+        background="white",
+        foreground="black",
+        rowheight=28,
+        fieldbackground="white",
+        font=("Arial", 11)
+    )
+
+    estilo.configure(
+        "Treeview.Heading",
+        font=("Arial", 12, "bold"),
+        background="#5289FF",
+        foreground="white"
+    )
+
+    # -------------------------
+    # TABLA
+    # -------------------------
+    columnas = (
+        "producto",
+        "precio",
+        "cantidad",
+        "total"
+    )
+
+    tabla = ttk.Treeview(
+        frame,
+        columns=columnas,
+        show="headings",
+        height=12
+    )
+
+    # -------------------------
+    # ENCABEZADOS
+    # -------------------------
+    tabla.heading("producto", text="Producto")
+    tabla.heading("precio", text="Precio")
+    tabla.heading("cantidad", text="Cantidad")
+    tabla.heading("total", text="Total")
+
+    # -------------------------
+    # TAMAÑO COLUMNAS
+    # -------------------------
+    tabla.column(
+        "producto",
+        width=280,
+        anchor="center"
+    )
+
+    tabla.column(
+        "precio",
+        width=120,
+        anchor="center"
+    )
+
+    tabla.column(
+        "cantidad",
+        width=120,
+        anchor="center"
+    )
+
+    tabla.column(
+        "total",
+        width=150,
+        anchor="center"
+    )
+
+    # -------------------------
+    # MOSTRAR TABLA
+    # -------------------------
+    tabla.pack(
+        pady=15,
+        padx=15
+    )
+
+    # -------------------------
+    # LEER ARCHIVO
+    # -------------------------
+    ventas_totales = 0
+
+    try:
+
+        BASE_DIR = os.path.dirname(
+            os.path.abspath(__file__)
+        )
+
+        archivo = os.path.join(
+            BASE_DIR,
+            "ventas.txt"
+        )
+
+        with open(
+            archivo,
+            "r",
+            encoding="utf-8"
+        ) as archivo_ventas:
+
+            for linea in archivo_ventas:
+
+                if linea.strip():
+
+                    datos = linea.strip().split("|")
+
+                    if len(datos) == 4:
+
+                        tabla.insert(
+                            "",
+                            tk.END,
+                            values=(
+                                datos[0],
+                                f"${datos[1]}",
+                                datos[2],
+                                f"${datos[3]}"
+                            )
+                        )
+
+                        # -------------------------
+                        # SUMAR TOTALES
+                        # -------------------------
+                        try:
+                            ventas_totales += float(datos[3])
+
+                        except:
+                            pass
+
+    except FileNotFoundError:
+
+        messagebox.showerror(
+            "Error",
+            "El archivo ventas.txt no existe."
+        )
+
+        ventana.destroy()
+        return
+
+    # -------------------------
+    # FRAME TOTAL VENTAS
+    # -------------------------
+    frame_total = tk.Frame(
+        frame,
+        bg="#AD70D8"
+    )
+
+    frame_total.pack(
+        pady=(5, 15)
+    )
+
+    # -------------------------
+    # TEXTO TOTAL
+    # -------------------------
+    lbl_total = tk.Label(
+        frame_total,
+        text="Total de Ventas:",
+        font=("Times New Roman", 16, "bold"),
+        bg="#AD70D8",
+        fg="white"
+    )
+
+    lbl_total.pack(
+        side="left",
+        padx=(0, 10)
+    )
+
+    # -------------------------
+    # CAJA TOTAL
+    # -------------------------
+    txt_total_ventas = tk.Entry(
+        frame_total,
+        font=("Arial", 14, "bold"),
+        width=12,
+        justify="center",
+        bd=2,
+        relief="groove"
+    )
+
+    txt_total_ventas.pack(
+        side="left"
+    )
+
+    txt_total_ventas.insert(
+        0,
+        f"{ventas_totales:.2f}"
+    )
+
+    txt_total_ventas.config(
+        state="readonly"
+    )
+
+    # -------------------------
+    # BOTÓN CERRAR
+    # -------------------------
+    btn_cerrar = tk.Button(
+        ventana,
+        text="Cerrar",
+        command=ventana.destroy,
+        font=("Times New Roman", 12, "bold"),
+        bg="#5289FF",
+        fg="white",
+        activebackground="#274E80",
+        activeforeground="white",
+        width=18,
+        bd=0,
+        pady=7,
+        cursor="hand2"
+    )
+
+    btn_cerrar.pack(pady=10)
 
 def abrir_acerca_de():
    messagebox.showinfo("Acerca de", "Punto de Venta de Ropa\n Proyecto Escolar\n Versión 1.0")
